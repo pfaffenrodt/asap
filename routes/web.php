@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Config;
 use Inertia\Inertia;
@@ -27,6 +29,16 @@ Route::get('/goodbye-browser', function () {
     return view('unsupported-browser');
 })->name('unsupported-browser');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->name('dashboard');
+Route::middleware(['auth:sanctum', 'verified'])->group(function() {
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
+    Route::resource('/projects', \App\Http\Controllers\ProjectController::class)
+        ->names([
+            'index' => 'projects',
+            'create' => 'projects.create',
+            'store' => 'projects.store',
+            'destroy' => 'projects.destroy',
+        ]);
+});
+
