@@ -1,0 +1,101 @@
+html, body, div, span, h1, h2, p, a, img, b, ul, li {
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    margin: 0;
+    padding: 0;
+    background-color: rgb(243, 244, 246);
+}
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+ul {
+    list-style: none
+}
+
+*, ::after, ::before {
+    box-sizing: border-box
+}
+
+a {
+    text-decoration: none;
+    color: #0072c6
+}
+
+a:hover {
+    text-decoration: none;
+    color: #004d8c
+}
+
+body {
+    text-align: center;
+    font-size: 14px;
+    line-height: 24px;
+    font-family: Nunito, sans-serif;
+    color: #284268;
+    overflow-y: scroll
+}
+
+h1 {
+    font-size: 40px;
+    line-height: 60px;
+    font-weight: 100;
+    margin: 20px 0 15px
+}
+
+h2 {
+    font-size: 20px;
+    line-height: 25px;
+    font-weight: 100;
+    margin: 10px 0
+}
+
+ul li {
+    list-style-type: disc;
+    list-style-position: inside
+}
+
+b {
+    font-weight: bold
+}
+
+p {
+    margin-bottom: 10px
+}
+
+.browser-list {
+    display: inline-block;
+    margin: auto;
+    padding: 0;
+    height: 42px
+}
+
+.browser {
+    display: block;
+    width: 155px;
+    height: 34px;
+    line-height: 22px;
+    float: left;
+    list-style: none
+}
+
+@media only screen and (max-width: 959px) {
+    h1 {
+        font-size: 26px;
+        line-height: 1.8;
+        font-weight: bold;
+        margin-top: 0
+    }
+
+    .browser-list {
+        height: auto;
+    }
+
+    .browser {
+        margin: 20px;
+    }
+}

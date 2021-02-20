@@ -1,2 +1,3 @@
 User-agent: *
-Disallow:
+Disallow: /goodbye-browser
+Disallow: /goodbye-browser/
