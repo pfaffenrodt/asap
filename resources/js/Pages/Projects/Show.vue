@@ -24,7 +24,22 @@
                 </template>
 
                 <template #content>
-                    TODO show details of project {{ project.name }}
+                    <h3 class="pb-10 text-xl">Releases of `{{ project.name }}`</h3>
+                    <div v-for="(release, index) in releases">
+                        <jet-section-border v-if="index > 0" />
+                        <div  class="flex flex-row justify-between">
+                            <div class="flex flex-col w-3/4">
+                                <h4 class="text-lg text-blue-900 pb-5">{{ release.name }}</h4>
+                                <p>{{ release.description }}</p>
+                            </div>
+                            <div class="flex flex-col  w-1/4">
+                                <h3 class="pb-5 text-lg">Packages</h3>
+                                <div v-for="artifact in release.packages">
+                                    <a :href="artifact.url" class="mb-2 flex items-center"><icon-download></icon-download><span class="ml-2">{{ artifact.name }}</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </template>
 
             </jet-action-section>
@@ -43,14 +58,16 @@ import JetInput from '@/Jetstream/Input'
 import JetInputError from '@/Jetstream/InputError'
 import JetLabel from '@/Jetstream/Label'
 import Button from "@/Jetstream/Button";
-import IconPlusCircle from "@/Icon/PlusCircle";
+import IconDownload from "@/Icon/Download";
 import IconPencilAlt from "@/Icon/PencilAlt";
+import JetSectionBorder from "@/Jetstream/SectionBorder";
 
 export default {
     components: {
         Button,
         AppLayout,
         JetButton,
+        JetSectionBorder,
         JetSecondaryButton,
         JetDangerButton,
         JetActionSection,
@@ -58,12 +75,14 @@ export default {
         JetInput,
         JetInputError,
         JetLabel,
+        IconDownload,
         IconPencilAlt,
     },
 
     props: [
         'permissions',
         'project',
+        'releases',
     ],
     data() {
         return {

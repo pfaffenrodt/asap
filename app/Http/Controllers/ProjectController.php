@@ -96,6 +96,50 @@ class ProjectController extends Controller
     {
         return  Inertia::render('Projects/Show', [
             'project' => $project,
+            'releases' => [
+                [
+                    'name' => 'Release 1.0.2',
+                    'description' => 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
+                    'packages' => [
+                        [
+                            'name' => 'Android Apk',
+                            'url' => 'https://test',
+                        ],
+                        [
+                            'name' => 'IOS IPA',
+                            'url' => 'https://test',
+                        ],
+                    ],
+                ],
+                [
+                    'name' => 'Release 1.0.1',
+                    'description' => 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
+                    'packages' => [
+                        [
+                            'name' => 'Android Apk',
+                            'url' => 'https://test',
+                        ],
+                        [
+                            'name' => 'IOS IPA',
+                            'url' => 'https://test',
+                        ],
+                    ],
+                ],
+                [
+                    'name' => 'Release 1.0.0',
+                    'description' => 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
+                    'packages' => [
+                        [
+                            'name' => 'Android Apk',
+                            'url' => 'https://test',
+                        ],
+                        [
+                            'name' => 'IOS IPA',
+                            'url' => 'https://test',
+                        ],
+                    ],
+                ],
+            ],
         ]);
     }
 
