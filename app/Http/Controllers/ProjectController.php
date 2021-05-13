@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class ProjectController extends Controller
@@ -56,6 +58,7 @@ class ProjectController extends Controller
             'permissions' => [
                 'canCreateProject' => $user->can('create', \App\Models\Project::class),
             ],
+            'exampleRepository' => Config::get('app.example_repository_url'),
         ]);
     }
 
@@ -71,7 +74,14 @@ class ProjectController extends Controller
          * @var \App\Models\User $user
          */
         $user = Auth::user();
-        $user->currentTeam->projects()->create(request()->validate(['name' => 'required']));
+        $user->currentTeam->projects()->create(
+            request()->validate([
+                'name'       => 'required',
+                'repository' => 'url',
+                'integration_type' => ['string', Rule::in(Config::get('app.integration_types'))],
+                'integration_access_token' => 'string',
+            ])
+        );
 
         return Redirect::route('projects');
     }
@@ -107,7 +117,8 @@ class ProjectController extends Controller
                 'canUpdateProject' => $user->can('update', $project),
                 'canDeleteProject' => $user->can('delete', $project),
             ],
-            'project' => $project,
+            'project' => $project->setAppends(['has_integration_access_token']),
+            'exampleRepository' => Config::get('app.example_repository_url'),
         ]);
     }
 
@@ -120,10 +131,14 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        $newData = $this->validate($request, [
-            'name' => 'string',
-        ]);
-        $project->update($newData);
+        $project->update(
+            $this->validate($request, [
+                'name'       => 'string',
+                'repository' => 'url',
+                'integration_type' => ['string', Rule::in(Config::get('app.integration_types'))],
+                'integration_access_token' => 'string',
+            ])
+        );
         return Redirect::route('projects.edit', ['project' => $project]);
     }
 

@@ -1,12 +1,18 @@
 <template>
     <app-layout>
         <template #header>
-            <h2 class=" text-xl text-gray-800 leading-tight">
+            <div class="flex items-center text-xl text-gray-800 leading-tight">
+                <h2 class="font-semibold  inline-block">
 
-                <inertia-link :href="route('projects')">
-                    Projects
-                </inertia-link> <b class="font-semibold pl-10">{{ project.name }}</b>
-            </h2>
+                    <inertia-link :href="route('projects')">
+                        Projects
+                    </inertia-link>
+                </h2>
+                <inertia-link :href="route('projects.edit', project.id)" class="flex items-center" alt="Edit" title="Edit">
+                    <b class="font-semibold pl-10 pr-2">{{ project.name }}</b>
+                    <icon-pencil-alt class="w-8 h-8"></icon-pencil-alt>
+                </inertia-link>
+            </div>
         </template>
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
             <jet-action-section @submitted="createProject">
@@ -37,6 +43,8 @@ import JetInput from '@/Jetstream/Input'
 import JetInputError from '@/Jetstream/InputError'
 import JetLabel from '@/Jetstream/Label'
 import Button from "@/Jetstream/Button";
+import IconPlusCircle from "@/Icon/PlusCircle";
+import IconPencilAlt from "@/Icon/PencilAlt";
 
 export default {
     components: {
@@ -50,6 +58,7 @@ export default {
         JetInput,
         JetInputError,
         JetLabel,
+        IconPencilAlt,
     },
 
     props: [

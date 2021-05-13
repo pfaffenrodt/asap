@@ -45,6 +45,16 @@ sail-docs: ## print sail help and url
 	@./vendor/bin/sail help
 	@echo "open https://laravel.com/docs/8.x/sail"
 
-# match all unkown tasks
+assets: ## build assets
+	@make -s sail yarn
+	@make -s sail yarn dev
+
+watch: ## build assets and watch
+	@make -s sail yarn
+	@make -s sail yarn watch-poll
+
+
+
+# match all unknown tasks
 %:
 	@:
