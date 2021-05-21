@@ -9,7 +9,7 @@
         </template>
 
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8" v-if="permissions.canCreateProject">
-            <create-project-form :exampleRepository="exampleRepository" :integrationTypes="integrationTypes" />
+            <create-project-form :exampleRepository="exampleRepository" :integrations="integrations" />
         </div>
     </app-layout>
 </template>
@@ -28,7 +28,7 @@ export default {
         'permissions',
         'project',
         'exampleRepository',
-        'integrationTypes',
+        'integrations',
     ],
     data() {
         return {

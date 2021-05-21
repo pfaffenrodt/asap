@@ -20,7 +20,7 @@
                 <jet-input-error :message="form.errors.repository" class="mt-2" />
             </div>
             <div class="col-span-6 sm:col-span-4">
-                <select-integration-type id="integration_type" class="mt-1 block w-full" v-model="form.integration_type" :integrationTypes="integrationTypes" />
+                <select-integration-type id="integration_type" class="mt-1 block w-full" v-model="form.integration_type" :integrations="integrations" />
 
                 <jet-input-error :message="form.errors.integration_type" class="mt-2" />
             </div>
@@ -51,7 +51,7 @@ import SelectIntegrationType from "@/Pages/Projects/SelectIntegrationType";
 export default {
     props: [
         'exampleRepository',
-        'integrationTypes',
+        'integrations',
     ],
     components: {
         JetButton,

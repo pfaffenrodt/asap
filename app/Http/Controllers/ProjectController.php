@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Integrations\Gitlab\GitlabIntegration;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redirect;
@@ -60,7 +60,7 @@ class ProjectController extends Controller
                 'canCreateProject' => $user->can('create', \App\Models\Project::class),
             ],
             'exampleRepository' => Config::get('app.example_repository_url'),
-            'integrationTypes' => Config::get('app.integration_types'),
+            'integrations' => Config::get('app.integrations'),
         ]);
     }
 
@@ -80,7 +80,7 @@ class ProjectController extends Controller
             request()->validate([
                 'name'       => 'required',
                 'repository' => 'url',
-                'integration_type' => ['string', Rule::in(Config::get('app.integration_types'))],
+                'integration_type' => ['string', Rule::in(Arr::pluck(Config::get('app.integrations'), 'type'))],
                 'integration_access_token' => 'string',
             ])
         );
@@ -123,7 +123,7 @@ class ProjectController extends Controller
             ],
             'project' => $project->setAppends(['has_integration_access_token']),
             'exampleRepository' => Config::get('app.example_repository_url'),
-            'integrationTypes' => Config::get('app.integration_types'),
+            'integrations' => Config::get('app.integrations'),
         ]);
     }
 
@@ -140,7 +140,7 @@ class ProjectController extends Controller
             $this->validate($request, [
                 'name'       => 'string',
                 'repository' => 'url',
-                'integration_type' => ['string', Rule::in(Config::get('app.integration_types'))],
+                'integration_type' => ['string', Rule::in(Arr::pluck(Config::get('app.integrations'), 'type'))],
                 'integration_access_token' => 'string',
             ])
         );

@@ -59,9 +59,16 @@ return [
     'asset_url' => env('ASSET_URL', null),
 
     'example_repository_url' => env('APP_EXAMPLE_REPO_URL', 'https://github.com/pfaffenrodt/asap'),
-    'integration_types' => [
-        'gitlab',
-        'github',
+
+    'integrations' => [
+        [
+            'type'  => 'gitlab',
+            'label' => 'GitLab',
+        ],
+        [
+            'type'  => 'github',
+            'label' => 'GitHub'
+        ]
     ],
     /*
     |--------------------------------------------------------------------------

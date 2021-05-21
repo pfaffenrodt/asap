@@ -12,7 +12,7 @@ import JetLabel from "@/Jetstream/Label";
 export default {
     props: [
         'modelValue',
-        'integrationTypes',
+        'integrations',
     ],
 
     emits: ['update:modelValue'],
@@ -30,11 +30,11 @@ export default {
     },
     methods: {
         createIntegrationOptions() {
-            if (!this.integrationTypes) {
+            if (!this.integrations) {
                 return [];
             }
-            return this.integrationTypes.map(integrationType => {
-                return { value: integrationType, label: integrationType };
+            return this.integrations.map(integration => {
+                return { value: integration.type, label: integration.label };
             });
         }
     }

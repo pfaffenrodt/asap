@@ -10,7 +10,7 @@
         </template>
 
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8" v-if="permissions.canUpdateProject">
-            <update-project-form :project="project" :exampleRepository="exampleRepository" :integrationTypes="integrationTypes" />
+            <update-project-form :project="project" :exampleRepository="exampleRepository" :integrations="integrations" />
         </div>
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8" v-if="permissions.canDeleteProject">
             <delete-project-form :project="project" />
@@ -34,7 +34,7 @@ export default {
         'permissions',
         'project',
         'exampleRepository',
-        'integrationTypes',
+        'integrations',
     ],
     data() {
         return {
