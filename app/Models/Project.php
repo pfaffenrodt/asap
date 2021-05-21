@@ -9,6 +9,8 @@ use Illuminate\Support\Str;
 /**
  * @property Team $team
  * @property string $repository
+ * @property string $host
+ * @property string $path
  * @property string $integration_type
  * @property string $integration_access_token
  * @property boolean $has_integration_access_token
@@ -34,5 +36,15 @@ class Project extends Model
 
     public function getHasIntegrationAccessTokenAttribute() {
         return Str::length(trim($this->integration_access_token)) > 0;
+    }
+
+    public function getHostAttribute() {
+        $repositoryUrlData = parse_url($this->repository);
+        return $repositoryUrlData['host'] ?? null;
+    }
+
+    public function getPathAttribute() {
+        $repositoryUrlData = parse_url($this->repository);
+        return $repositoryUrlData['path'] ?? null;
     }
 }

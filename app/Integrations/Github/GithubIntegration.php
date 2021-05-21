@@ -13,14 +13,10 @@ class GithubIntegration implements Integration
     function provideReleases(Project $project)
     {
         // https://docs.github.com/en/rest/reference/repos#releases
-        $repositoryUrlData = parse_url($project->repository);
         $access_token = $project->integration_access_token;
-        $projectPath = $repositoryUrlData['path'];
-        $headers = [
-            "Accept" => "application/vnd.github.v3+json",
-            "Authorization" => "token $access_token",
-        ];
-        return collect(Http::withHeaders($headers)
+        $projectPath = $project->path;
+        return collect(Http::accept("application/vnd.github.v3+json")
+            ->withToken($access_token, 'token')
             ->get("https://api.github.com/repos$projectPath/releases")
             ->json())->map(function($release) {
             return [
