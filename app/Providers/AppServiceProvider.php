@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Integrations\Github\GithubIntegration;
+use App\Integrations\Gitlab\GitlabIntegration;
+use App\Integrations\Integration;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +16,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->when(Integration::class);
+        $this->app->singleton('integration.github', GithubIntegration::class);
+        $this->app->singleton('integration.gitlab', GitlabIntegration::class);
     }
 
     /**

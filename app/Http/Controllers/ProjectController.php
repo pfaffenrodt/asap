@@ -60,6 +60,7 @@ class ProjectController extends Controller
                 'canCreateProject' => $user->can('create', \App\Models\Project::class),
             ],
             'exampleRepository' => Config::get('app.example_repository_url'),
+            'integrationTypes' => Config::get('app.integration_types'),
         ]);
     }
 
@@ -95,7 +96,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        $releases = app()->make(GitlabIntegration::class)->provideReleases($project);
+        $releases = app()->make('integration.'.$project->integration_type)->provideReleases($project);
         return  Inertia::render('Projects/Show', [
             'project' => $project,
             'releases' => $releases,
@@ -122,6 +123,7 @@ class ProjectController extends Controller
             ],
             'project' => $project->setAppends(['has_integration_access_token']),
             'exampleRepository' => Config::get('app.example_repository_url'),
+            'integrationTypes' => Config::get('app.integration_types'),
         ]);
     }
 

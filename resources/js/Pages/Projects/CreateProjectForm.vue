@@ -20,8 +20,8 @@
                 <jet-input-error :message="form.errors.repository" class="mt-2" />
             </div>
             <div class="col-span-6 sm:col-span-4">
-                <jet-label for="integration_type" value="Integration Type" />
-                <jet-input id="integration_type" disabled type="text" class="mt-1 block w-full" v-model="form.integration_type" autofocus />
+                <select-integration-type id="integration_type" class="mt-1 block w-full" v-model="form.integration_type" :integrationTypes="integrationTypes" />
+
                 <jet-input-error :message="form.errors.integration_type" class="mt-2" />
             </div>
             <div class="col-span-6 sm:col-span-4">
@@ -45,15 +45,22 @@ import JetFormSection from '@/Jetstream/FormSection'
 import JetInput from '@/Jetstream/Input'
 import JetInputError from '@/Jetstream/InputError'
 import JetLabel from '@/Jetstream/Label'
+import JetFormSelect from '@/Jetstream/FormSelect'
+import SelectIntegrationType from "@/Pages/Projects/SelectIntegrationType";
 
 export default {
-    props: ['exampleRepository'],
+    props: [
+        'exampleRepository',
+        'integrationTypes',
+    ],
     components: {
         JetButton,
         JetFormSection,
         JetInput,
         JetInputError,
         JetLabel,
+        JetFormSelect,
+        SelectIntegrationType
     },
 
     data() {
@@ -61,9 +68,10 @@ export default {
             form: this.$inertia.form({
                 name: '',
                 repository: '',
-                integration_type: 'gitlab',
+                integration_type: '',
                 integration_access_token: '',
-            })
+            }),
+            integrationOptions: [],
         }
     },
 
@@ -74,6 +82,6 @@ export default {
                 preserveScroll: true
             });
         },
-    },
+    }
 }
 </script>

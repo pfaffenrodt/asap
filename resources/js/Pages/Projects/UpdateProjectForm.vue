@@ -20,8 +20,7 @@
                 <jet-input-error :message="form.errors.repository" class="mt-2" />
             </div>
             <div class="col-span-4 sm:col-span-2">
-                <jet-label for="integration_type" value="Integration Type" />
-                <jet-input id="integration_type" disabled type="text" class="mt-1 block w-full" v-model="form.integration_type" autofocus />
+                <select-integration-type class="mt-1 block w-full" :integrationTypes="integrationTypes" v-model="form.integration_type" />
                 <jet-input-error :message="form.errors.integration_type" class="mt-2" />
             </div>
             <div class="col-span-6 sm:col-span-4">
@@ -49,11 +48,14 @@
     import JetInput from "@/Jetstream/Input";
     import JetInputError from "@/Jetstream/InputError";
     import JetLabel from "@/Jetstream/Label";
+    import JetFormSelect from "@/Jetstream/FormSelect";
+    import SelectIntegrationType from "@/Pages/Projects/SelectIntegrationType";
 
     export default {
         props: [
             'project',
             'exampleRepository',
+            'integrationTypes',
         ],
 
         components: {
@@ -66,6 +68,8 @@
             JetInput,
             JetInputError,
             JetLabel,
+            JetFormSelect,
+            SelectIntegrationType,
         },
 
         data() {
@@ -73,7 +77,7 @@
                 form: this.$inertia.form({
                     name: this.project.name,
                     repository: this.project.repository,
-                    integration_type: this.project.integration_type ?? 'gitlab',
+                    integration_type: this.project.integration_type,
                     integration_access_token: this.project.integration_access_token,
                 }),
                 exampleRepository: this.exampleRepository,
