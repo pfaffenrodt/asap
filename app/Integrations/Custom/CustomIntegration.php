@@ -5,11 +5,28 @@ namespace App\Integrations\Custom;
 
 
 use App\Integrations\Integration;
+use App\Integrations\WithReleaseResponseMapper;
 use App\Models\Project;
 use Illuminate\Support\Facades\Http;
 
 class CustomIntegration implements Integration
 {
+    use WithReleaseResponseMapper;
+
+    protected $releaseMap = [
+        'name'        => 'name',
+        'description' => 'description',
+        'created_at'  => 'created_at',
+        'released_at' => 'released_at',
+        'commit'      => 'commit',
+        'packages'    => 'packages',
+    ];
+
+    protected $packageMap = [
+        'name' => 'name',
+        'url'  => 'url',
+    ];
+
     function provideReleases(Project $project)
     {
         $access_token = $project->integration_access_token;
@@ -17,23 +34,7 @@ class CustomIntegration implements Integration
             "Accept" => "application/json",
             "Authorization" => "$access_token",
         ];
-        return collect(
-            Http::withHeaders($headers)->get($project->repository)->json()
-        )->map(function($release) {
-            return [
-                'name' => $release['name'] ?? '',
-                'description' => $release['description'] ?? '',
-                'created_at' => $release['created_at'] ?? '',
-                'released_at' => $release['published_at'] ?? '',
-                'commit' => $release['commit'] ?? '',
-                'packages' => collect($release['packages'])->map(function($package) {
-                    return [
-                        'name' => $package['name'],
-                        'url' => $package['url'],
-                    ];
-                }),
-            ];
-        });
+        $response = Http::withHeaders($headers)->get($project->repository)->json();
+        return $this->mapResponse($response);
     }
-
 }
