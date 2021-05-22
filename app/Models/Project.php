@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 
 /**
  * @property Team $team
+ * @property integer $id
  * @property string $repository
  * @property string $host
  * @property string $path

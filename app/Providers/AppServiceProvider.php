@@ -2,10 +2,8 @@
 
 namespace App\Providers;
 
-use App\Integrations\Custom\CustomIntegration;
-use App\Integrations\Github\GithubIntegration;
-use App\Integrations\Gitlab\GitlabIntegration;
-use App\Integrations\Integration;
+use App\Integrations\CacheIntegration;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -17,10 +15,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->when(Integration::class);
-        $this->app->singleton('integration.custom', CustomIntegration::class);
-        $this->app->singleton('integration.github', GithubIntegration::class);
-        $this->app->singleton('integration.gitlab', GitlabIntegration::class);
+        collect(Config::get('app.integrations'))->each(function($integrationConfig) {
+            $this->app->singleton('integration.'.$integrationConfig['type'], function($app) use ($integrationConfig) {
+                Config::get('app.integrations.custom');
+                return new CacheIntegration($integrationConfig['cache-ttl'], $app->make($integrationConfig['class']));
+            });
+        });
     }
 
     /**

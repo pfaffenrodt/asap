@@ -64,14 +64,20 @@ return [
         [
             'type'  => 'gitlab',
             'label' => 'GitLab',
+            'cache-ttl' => 400,
+            'class' => \App\Integrations\Gitlab\GitlabIntegration::class,
         ],
         [
             'type'  => 'github',
-            'label' => 'GitHub'
+            'label' => 'GitHub',
+            'cache-ttl' => 400,
+            'class' => \App\Integrations\Github\GithubIntegration::class,
         ],
         [
             'type'  => 'custom',
-            'label' => 'Custom (asap api)'
+            'label' => 'Custom (asap api)',
+            'cache-ttl' => 400,
+            'class' => \App\Integrations\Custom\CustomIntegration::class,
         ],
     ],
     /*
