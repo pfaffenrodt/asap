@@ -4,12 +4,15 @@
 namespace App\Integrations;
 
 
+use App\Models\Project;
 use Illuminate\Support\Arr;
 
-trait WithReleaseResponseMapper
+abstract class BaseIntegration implements Integration
 {
+    protected $releaseMap = [];
+    protected $packageMap = [];
 
-    protected function mapData(array $input, $map)
+    private function mapData(array $input, $map)
     {
         $output = [];
         foreach ($map as $attribute => $inputKey) {
@@ -23,7 +26,7 @@ trait WithReleaseResponseMapper
         return $output;
     }
 
-    function mapResponse(array $response)
+    protected function mapResponse(array $response)
     {
         return collect($response)->map(function ($release) {
             $release = $this->mapData($release, $this->releaseMap);
@@ -31,4 +34,11 @@ trait WithReleaseResponseMapper
             return $release;
         });
     }
+
+    function provideReleases(Project $project)
+    {
+        return $this->mapResponse($this->fetchReleases($project));
+    }
+
+    abstract function fetchReleases(Project $project);
 }

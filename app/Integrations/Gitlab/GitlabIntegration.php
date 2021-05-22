@@ -3,9 +3,7 @@
 
 namespace App\Integrations\Gitlab;
 
-
-use App\Integrations\Integration;
-use App\Integrations\WithReleaseResponseMapper;
+use App\Integrations\BaseIntegration;
 use App\Models\Project;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
@@ -15,9 +13,8 @@ use Illuminate\Support\Facades\Http;
  * https://docs.gitlab.com/ee/user/project/releases/
  * api to list https://docs.gitlab.com/ee/api/releases/index.html#list-releases
  */
-class GitlabIntegration implements Integration
+class GitlabIntegration extends BaseIntegration
 {
-    use WithReleaseResponseMapper;
 
     protected $releaseMap = [
         'name'        => 'name',
@@ -33,14 +30,13 @@ class GitlabIntegration implements Integration
         'url'  => 'direct_asset_url',
     ];
 
-    function provideReleases(Project $project)
+    function fetchReleases(Project $project)
     {
         $id = $this->searchProjectId($project);
         $host = $project->host;
-        $response = $this->createAuthorizedRequest($project)
+        return $this->createAuthorizedRequest($project)
             ->get("https://$host/api/v4/projects/$id/releases")
             ->json();
-        return $this->mapResponse($response);
     }
 
     protected function createAuthorizedRequest(Project $project): PendingRequest {

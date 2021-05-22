@@ -3,9 +3,7 @@
 
 namespace App\Integrations\Github;
 
-
-use App\Integrations\Integration;
-use App\Integrations\WithReleaseResponseMapper;
+use App\Integrations\BaseIntegration;
 use App\Models\Project;
 use Illuminate\Support\Facades\Http;
 
@@ -13,9 +11,8 @@ use Illuminate\Support\Facades\Http;
  * integration for release api of github
  * https://docs.github.com/en/rest/reference/repos#releases
  */
-class GithubIntegration implements Integration
+class GithubIntegration extends BaseIntegration
 {
-    use WithReleaseResponseMapper;
 
     protected $releaseMap = [
         'name'        => 'name',
@@ -32,14 +29,13 @@ class GithubIntegration implements Integration
     ];
 
 
-    function provideReleases(Project $project)
+    function fetchReleases(Project $project)
     {
         $access_token = $project->integration_access_token;
         $projectPath = $project->path;
-        $response = Http::accept("application/vnd.github.v3+json")
+        return Http::accept("application/vnd.github.v3+json")
             ->withToken($access_token, 'token')
             ->get("https://api.github.com/repos$projectPath/releases")
             ->json();
-        return $this->mapResponse($response);
     }
 }
